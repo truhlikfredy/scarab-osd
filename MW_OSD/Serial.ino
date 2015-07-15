@@ -1,5 +1,8 @@
- 
-#define SERIALBUFFERSIZE 150
+#if defined NAZA
+  #define SERIALBUFFERSIZE 75
+#else
+  #define SERIALBUFFERSIZE 150
+#endif
 static uint8_t serialBuffer[SERIALBUFFERSIZE]; // this hold the imcoming string from serial O string
 static uint8_t receiverIndex;
 static uint8_t dataSize;
@@ -717,17 +720,18 @@ void serialMSPreceive(uint8_t loops)
     #ifdef GPSOSD    
       armedtimer = 0;
       #ifdef NAZA
-      debug[0]++;
         uint8_t decodedMessage = NazaDecoder.decode(c);
-      debug[1]=decodedMessage;
         switch (decodedMessage){
           uint8_t GPS_fix_temp;
           case NAZA_MESSAGE_GPS:
+debug[0]++;
             GPS_coord[LAT]=NazaDecoder.getLat();
+debug[2]=GPS_coord[LAT];
             GPS_coord[LON]=NazaDecoder.getLon();
             GPS_altitude=NazaDecoder.getGpsAlt();
             GPS_fix_temp=NazaDecoder.getFixType();
             GPS_numSat=NazaDecoder.getNumSat();
+debug[1]=GPS_numSat;
             GPS_speed=NazaDecoder.getSpeed();
             gpsvario();            
             if (GPS_fix_temp>0){
@@ -736,7 +740,11 @@ void serialMSPreceive(uint8_t loops)
             GPS_NewData();
             break;
           case NAZA_MESSAGE_COMPASS:
-            GPS_ground_course=NazaDecoder.getHeadingNc();
+            GPS_ground_course=10*NazaDecoder.getHeadingNc();
+            int16_t MwHeading360=GPS_ground_course/10;
+            if (MwHeading360>180)
+              MwHeading360 = MwHeading360-360;
+            MwHeading   = MwHeading360;
         break;
         }
       #else

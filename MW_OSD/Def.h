@@ -4,7 +4,7 @@
 /*--------------------------       advanced parameters      ----------------------------------------------------*/
 
 /*----------------------------------------------       Developer parameters      ----------------------------------------------------*/
-//#define DEBUG         // Enable/disable option to display OSD debug values 
+#define DEBUG         // Enable/disable option to display OSD debug values 
 //#define DEBUGMW       // Disable to prevent load Mutltiwii debug values from MSP 
 
 /********************  CONTROLLER rule definitions  **********************/
@@ -58,18 +58,6 @@
   #define SETCONFIG 25                  //for BASEFLIGHT20150627 to use MSP_SET_CONFIG
 #endif
 
-/********************   ENABLE/DISABLE CONFIG PAGES via STICK MENU     *********************/
-//large memory savings if not needed, comment to disable
-#define PAGE1 //PID CONFIG
-#define PAGE2 //RC TUNING
-#define PAGE3 //VOLTAGE
-#define PAGE4 //RSSI
-#define PAGE5 //CURRENT
-#define PAGE6 //DISPLAY
-#define PAGE7 //ADVANCED
-#define PAGE8 //GPS TIME
-#define PAGE9 //ALARMS
-
 
 /********************  HARDWARE PINS definitions  *********************/
 #define AMPERAGEPIN   A1
@@ -120,6 +108,19 @@
     #define DIVIDER1v1      0.0001      // Voltage divider for 1.1v reference. Use 0.0001 default unless advised otherwise.
     #define DIVIDER5v       0.0005      // Voltage divider for 5v reference. Use 0.0005 default unless advised otherwise.
 #endif
+
+
+/********************   ENABLE/DISABLE CONFIG PAGES via STICK MENU     *********************/
+//large memory savings if not needed, comment to disable
+#define PAGE1 //PID CONFIG
+#define PAGE2 //RC TUNING
+#define PAGE3 //VOLTAGE
+#define PAGE4 //RSSI
+#define PAGE5 //CURRENT
+#define PAGE6 //DISPLAY
+#define PAGE7 //ADVANCED
+#define PAGE8 //GPS TIME
+#define PAGE9 //ALARMS
 
 
 /********************  GPS OSD rule definitions  *********************/
@@ -177,6 +178,8 @@
   #define FORCESENSORS
   #define HIDEARMEDSTATUS
   #define GPSACTIVECHECK 5  
+  #undef PAGE1
+  #undef PAGE2  
 #endif
 
 #if defined (OSD_SWITCH_RSSI)  
